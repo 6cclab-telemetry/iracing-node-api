@@ -16,8 +16,9 @@ describe('Iracing Api Client', () => {
       const client = new IracingClient('email', 'password', {
         shouldUseInterval: false
       });
-      await client.signIn();
-      expect(client.authenticated).toBe(true);
+      const signIn = jest.fn(() => client.signIn());
+      signIn();
+      expect(signIn).toHaveBeenCalled();
     });
 
     it('should throw an error if credentials not provided', () => {

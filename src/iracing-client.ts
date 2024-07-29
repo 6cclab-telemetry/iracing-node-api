@@ -86,7 +86,7 @@ class IracingClient {
         password: hash
       });
 
-      if (res.data.authcode) {
+      if (res?.data?.authcode) {
         this.authenticated = true;
       }
     } catch (error) {
