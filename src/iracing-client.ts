@@ -49,6 +49,7 @@ class IracingClient {
         baseURL: 'https://members-ng.iracing.com'
       })
     );
+    this.signIn();
     this.interval = null;
     this.handleError();
   }
@@ -67,7 +68,6 @@ class IracingClient {
           this.authenticated = false;
           this.signIn();
         }
-        console.error(error);
       }
     );
   }
@@ -79,29 +79,18 @@ class IracingClient {
   }
 
   public async signIn() {
-    if (!this.authenticated) {
-      const hash = this.encodeCredentials(this.email, this.password);
-      try {
-        const res = await this.apiClient.post<AuthResponse>('/auth', {
-          email: this.email,
-          password: hash
-        });
+    const hash = this.encodeCredentials(this.email, this.password);
+    try {
+      const res = await this.apiClient.post<AuthResponse>('/auth', {
+        email: this.email,
+        password: hash
+      });
 
-        if (res.data.authcode) {
-          this.authenticated = true;
-
-          this.options.shouldUseInterval &&
-            (this.interval = setInterval(() => {
-              console.log('Re-authenticating');
-              this.signIn();
-            }, 3200 * 1000));
-        }
-      } catch (error) {
-        const requestError = error as AxiosError;
-        if (requestError.status) {
-          // Implement retry logic
-        }
+      if (res.data.authcode) {
+        this.authenticated = true;
       }
+    } catch (error) {
+      throw error;
     }
   }
 
