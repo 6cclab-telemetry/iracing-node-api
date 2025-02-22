@@ -618,13 +618,13 @@ export interface SeasonCarClass {
 }
 
 export interface LeagueSeasonSessionsResponse {
-  sessions: LeagueSeasonSessions[];
+  sessions: LeagueSeasonSession[];
   success: boolean;
   season_id: number;
   league_id: number;
 }
 
-export interface LeagueSeasonSessions {
+export interface LeagueSeasonSession {
   cars: {
     car_id: number;
     car_name: string;
