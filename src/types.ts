@@ -11,6 +11,7 @@ export type AuthResponse = {
 };
 
 export type SignedUrl = {
+  data_url: string | undefined;
   link: string;
   expires: string | Date;
 };
@@ -528,4 +529,215 @@ export interface Helmet {
   color3: string;
   face_type: number;
   helmet_type: number;
+}
+
+export interface League {
+  league_id: number;
+  owner_id: number;
+  league_name: string;
+  created: string;
+  hidden: boolean;
+  message: string;
+  about: string;
+  url: string;
+  recruiting: boolean;
+  private_wall: boolean;
+  private_roster: boolean;
+  private_schedule: boolean;
+  private_results: boolean;
+  is_owner: boolean;
+  is_admin: boolean;
+  roster_count: boolean;
+  owner: {
+    cust_id: number;
+    display_name: string;
+    helmet: Helmet;
+  };
+  image: string;
+  large_logo: string;
+  tags: {
+    categorized: [];
+    not_categorized: [];
+  };
+  league_applications: [];
+  pending_requests: [];
+  is_member: boolean;
+  is_applicant: boolean;
+  is_invite: boolean;
+  is_ignored: boolean;
+  roster: LeagueRoster;
+}
+
+export interface LeagueRoster {
+  cust_id: number;
+  display_name: string;
+  helmet: Helmet;
+  owner: boolean;
+  admin: boolean;
+  league_mail_opt_out: boolean;
+  league_pm_opt_out: boolean;
+  leage_member_since: boolean;
+  car_number: string;
+  nick_name: string;
+}
+
+export interface SeasonsResponse {
+  subscribed: boolean;
+  seasons: Season[];
+  success: boolean;
+  retired: boolean;
+  league_id: number;
+}
+
+export interface Season {
+  league_id: number;
+  season_id: number;
+  points_system_id: number;
+  season_name: string;
+  active: boolean;
+  hidden: boolean;
+  num_drops: number;
+  no_drops_on_or_after_race_num: number;
+  points_cars: {
+    car_id: number;
+    car_name: string;
+  }[];
+  drivers_points_car_classes: SeasonCarClass[];
+  team_points_car_classes: SeasonCarClass[];
+  points_system_name: string;
+  points_system_desc: string;
+}
+
+export interface SeasonCarClass {
+  car_class_id: number;
+  name: string;
+  cars_in_class: {
+    car_id: number;
+    car_name: string;
+  }[];
+}
+
+export interface LeagueSeasonSessionsResponse {
+  sessions: LeagueSeasonSessions[];
+  success: boolean;
+  season_id: number;
+  league_id: number;
+}
+
+export interface LeagueSeasonSessions {
+  cars: {
+    car_id: number;
+    car_name: string;
+    car_class_id: number;
+    car_class_name: string;
+  }[];
+  driver_changes: boolean;
+  entry_count: number;
+  has_results: boolean;
+  heat_ses_info: HeatSessionInfo;
+  launch_at: string;
+  league_id: number;
+  league_season_id: number;
+  lone_qualify: boolean;
+  pace_car_class_id: number | null;
+  pace_car_id: number | null;
+  password_protected: boolean;
+  practice_length: number;
+  private_session_id: number;
+  qualify_laps: number;
+  qualify_length: number;
+  race_laps: number;
+  race_length: number;
+  session_id: number;
+  status: number;
+  subsession_id: number;
+  team_entry_count: number;
+  time_limit: number;
+  track: {
+    config_name: string;
+    track_id: number;
+    track_name: string;
+  }
+  track_state: TrackState;
+  weather: LeagueSeasonSessionWeather;
+  winner_id: number;
+  winner_name: string;
+}
+
+export interface HeatSessionInfo {
+  consolation_delta_max_field_size: number;
+  consolation_delta_session_laps: number;
+  consolation_delta_session_length_minutes: number;
+  consolation_first_max_field_size: number;
+  consolation_first_session_laps: number;
+  consolation_first_session_length_minutes: number;
+  consolation_num_position_to_invert: number;
+  consolation_num_to_consolation: number;
+  consolation_num_to_main: number;
+  consolation_run_always: boolean;
+  consolation_scores_champ_points: boolean;
+  created: string;
+  cust_id: number;
+  heat_caution_type: number;
+  heat_info_id: number;
+  heat_info_name: string;
+  heat_laps: number;
+  heat_length_minuts: number;
+  heat_max_field_size: number;
+  heat_num_for_each_to_main: number;
+  heat_num_position_to_invert: number;
+  heat_scores_champ_points: boolean;
+  heat_session_minutes_estimate: number;
+  hidden: boolean;
+  main_laps: number;
+  main_length_minutes: number;
+  main_max_field_size: number;
+  main_num_position_to_invert: number;
+  max_enterants: number;
+  open_practice: boolean;
+  pre_main_practice_length_minutes: number;
+  pre_qual_num_to_main: number;
+  pre_qual_practice_length_minutes: number;
+  qual_caution_type: number;
+  qual_laps: number;
+  qual_length_minutes: number;
+  qual_num_to_main: number;
+  qual_open_delay_seconds: number;
+  qual_scores_champ_points: boolean;
+  qual_scoring: number;
+  qual_style: number;
+  race_style: number;
+}
+
+export interface LeagueSeasonSessionWeather {
+  allow_fog: boolean;
+  fog: number;
+  precip_option: number;
+  rel_humidity: number;
+  skies: number;
+  temp_units: number;
+  temp_value: number;
+  track_water: number;
+  type: number;
+  version: number;
+  weather_summary: LeagueSeasonSessionWeatherSummary;
+  weather_val_initial: number;
+  weather_var_ongoing: number;
+  wind_dir: number;
+  wind_units: number;
+  wind_value: number;
+}
+
+export interface LeagueSeasonSessionWeatherSummary {
+  max_percip_rate: number;
+  max_percip_rate_desc: string;
+  percip_chance: number;
+  skies_high: number;
+  skies_low: number;
+  temp_high: number;
+  temp_low: number;
+  temp_units: number;
+  wind_high: number;
+  wind_low: number;
+  wind_units: number;
 }
