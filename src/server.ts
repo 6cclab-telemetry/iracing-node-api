@@ -54,6 +54,25 @@ app.get('/results/lap_data', async (req, res) => {
   res.send(data);
 });
 
+app.get('/leagues/:leagueId', async (req, res) => {
+  const data = await client.getLeague(Number(req.params.leagueId));
+  res.send(data);
+});
+
+app.get('/leagues/:leagueId/seasons', async (req, res) => {
+  const data = await client.getLeagueSeasons(Number(req.params.leagueId));
+  res.send(data);
+});
+app.get('/leagues/:leagueId/seasons/:seasonId/sessions', async (req, res) => {
+  const data = await client.getLeagueSeasonSesssions(Number(req.params.leagueId),Number(req.params.seasonId));
+  res.send(data);
+});
+
+app.get('/leagues/:leagueId/roster', async (req, res) => {
+  const data = await client.getLeagueRoster(Number(req.params.leagueId));
+  res.send(data);
+});
+
 app.listen(3000, () => {
   console.log('Server running on port: ', 3000);
 });

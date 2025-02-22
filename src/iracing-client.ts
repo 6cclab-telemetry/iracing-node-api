@@ -9,9 +9,13 @@ import {
   CarDataResponse,
   EventLogResponse,
   LapDataResponse,
+  League,
+  LeagueRoster,
+  LeagueSeasonSessions,
   Member,
   MemberResponse,
   MemberStatHistory,
+  Season,
   SessionResult,
   SignedUrl,
   TrackAssetResponse,
@@ -222,6 +226,50 @@ class IracingClient {
       signedResponse.members.find((member) => member.cust_id === memberId) ??
       null
     );
+  }
+
+  public async getLeague(leagueId: number): Promise<League | null> {
+    await this.signIn();
+    const res = await this.apiClient.get<SignedUrl>(
+      `data/league/get?league_id=${leagueId}`
+    );
+
+    const signedData = await this.getResource<League>(res.data?.link);
+
+    return signedData;
+  }
+  
+  public async getLeagueSeasons(leagueId: number): Promise<Season | null> {
+    await this.signIn();
+    const res = await this.apiClient.get<SignedUrl>(
+      `data/league/seasons?league_id=${leagueId}`
+    );
+
+    const signedData = await this.getResource<Season>(res.data?.link);
+
+    return signedData;
+  }
+  
+  public async getLeagueRoster(leagueId: number): Promise<LeagueRoster | null> {
+    await this.signIn();
+    const res = await this.apiClient.get<SignedUrl>(
+      `data/league/roster?league_id=${leagueId}`
+    );
+  
+    const signedData = await this.getResource<LeagueRoster>(res.data?.data_url);
+  
+    return signedData;
+  }
+
+  public async getLeagueSeasonSesssions(leagueId: number,seasonId: number): Promise<LeagueSeasonSessions | null> {
+    await this.signIn();
+    const res = await this.apiClient.get<SignedUrl>(
+      `data/league/season_sessions?league_id=${leagueId}&season_id=${seasonId}`
+    );
+  
+    const signedData = await this.getResource<LeagueSeasonSessions>(res.data?.link);
+  
+    return signedData;
   }
 }
 
