@@ -11,6 +11,7 @@ import {
   LapDataResponse,
   League,
   LeagueRoster,
+  LeagueSeasonSession,
   LeagueSeasonSessions,
   Member,
   MemberResponse,
@@ -261,13 +262,13 @@ class IracingClient {
     return signedData;
   }
 
-  public async getLeagueSeasonSesssions(leagueId: number,seasonId: number): Promise<LeagueSeasonSessions | null> {
+  public async getLeagueSeasonSesssions(leagueId: number,seasonId: number): Promise<LeagueSeasonSession | null> {
     await this.signIn();
     const res = await this.apiClient.get<SignedUrl>(
       `data/league/season_sessions?league_id=${leagueId}&season_id=${seasonId}`
     );
   
-    const signedData = await this.getResource<LeagueSeasonSessions>(res.data?.link);
+    const signedData = await this.getResource<LeagueSeasonSession>(res.data?.link);
   
     return signedData;
   }
