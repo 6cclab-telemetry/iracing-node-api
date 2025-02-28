@@ -547,7 +547,7 @@ export interface League {
   private_results: boolean;
   is_owner: boolean;
   is_admin: boolean;
-  roster_count: boolean;
+  roster_count: number;
   owner: {
     cust_id: number;
     display_name: string;
